@@ -6,72 +6,75 @@
 
 #include <CapacitiveSensor.h>
 
-#define pinTAS 10   // Taster pin
-#define pinLED 8    // LED pin
-#define pinREG A0   // Sensitivity control pin
+#define PIN_TAS 10 // Taster pin
+#define PIN_LED 8  // LED pin
+#define PIN_REG A0 // Sensitivity control pin
 
 CapacitiveSensor sensor = CapacitiveSensor(4, 2); // 1M resistor between pins 4 & 2, pin 2 is sensor pin
+const int AUTO_CALIBRATION_OFF = 0xFFFFFFFF;
 
-bool hldLED = false;
-bool hldDLY = false;
+bool ledActive = false;
+bool delayActive = false;
 int sensitivityMAX = 200;
-int sensitivityMIN = 0;
 int setLEDtime = 100;
-int hldLEDtime = 0;
-int setDLYtime = 50;
-int hldDLYtime = 0;
-String isRun = "OFF";
+int ledOnTime = 0;
+int setDelayTime = 50;
+int delayTime = 0;
+String ledStatus = "OFF";
 
 void setup() {
   Serial.begin(115200);
-  pinMode(pinLED, OUTPUT);
-  pinMode(pinTAS, INPUT);
-  pinMode(pinREG, INPUT);
+  pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_TAS, INPUT);
+  pinMode(PIN_REG, INPUT);
 
-  sensor.set_CS_AutocaL_Millis(0xFFFFFFFF); // turn off autocalibration
+  sensor.set_CS_AutocaL_Millis(AUTO_CALIBRATION_OFF);
 }
 
 void loop() {
-  bool stateTAS = digitalRead(pinTAS);
-  int stateREG = analogRead(pinREG);
-  int valREG = map(stateREG, 0, 1023, sensitivityMIN, sensitivityMAX);
-
-  Serial.print(isRun);
-  Serial.print(valREG);
-  Serial.print("<");
-  Serial.print(hldDLYtime);
-  Serial.print("_");
-  Serial.print(hldLEDtime);
-  Serial.print(">");
-
+  bool buttonState = digitalRead(PIN_TAS);
+  int sensitivityValue = map(analogRead(PIN_REG), 0, 1023, 0, sensitivityMAX);
   long measurement = sensor.capacitiveSensor(30);
+
+  Serial.print(ledStatus);
+  Serial.print(sensitivityValue);
+  Serial.print("<");
+  Serial.print(delayTime);
+  Serial.print("_");
+  Serial.print(ledOnTime);
+  Serial.print(">");
   Serial.println(measurement);
 
-  if (stateTAS || measurement > valREG || hldLED) {
-    hldDLYtime++;
-    if (hldDLYtime >= setDLYtime || hldDLY) {
-      hldDLY = true;
-      digitalWrite(pinLED, HIGH);
-      hldLED = true;
-      isRun = "ON--";
+  if (buttonState || measurement > sensitivityValue || ledActive) {
+    delayTime++;
+    if (delayTime >= setDelayTime || delayActive) {
+      delayActive = true;
+      digitalWrite(PIN_LED, HIGH);
+      ledActive = true;
+      ledStatus = "ON--";
     }
   } else {
-    digitalWrite(pinLED, LOW);
-    hldLED = false;
-    isRun = "OFF-";
-    hldDLY = false;
-    hldDLYtime = 0;
+    resetLED();
   }
-  if (hldLED) {
-    hldLEDtime++;
-    hldDLYtime = 0;
-    if (hldLEDtime >= setLEDtime) {
-      hldLED = false;
-      hldLEDtime = 0;
+
+  if (ledActive) {
+    ledOnTime++;
+    delayTime = 0;
+    if (ledOnTime >= setLEDtime) {
+      resetLED();
     }
-    if (stateTAS || measurement > valREG) {
-      hldLEDtime = 0;
+    if (buttonState || measurement > sensitivityValue) {
+      ledOnTime = 0;
     }
   }
   delay(10);
+}
+
+void resetLED() {
+  digitalWrite(PIN_LED, LOW);
+  ledActive = false;
+  ledStatus = "OFF-";
+  delayActive = false;
+  delayTime = 0;
+  ledOnTime = 0;
 }
