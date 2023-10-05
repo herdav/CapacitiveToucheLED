@@ -8,7 +8,7 @@
 
 #define PIN_TAS 10 // Taster pin
 #define PIN_LED 8  // LED pin
-#define PIN_REG A0 // Sensitivity control pin
+#define PIN_REG A0 // Sensitivity control pin (40/200)
 
 CapacitiveSensor sensor = CapacitiveSensor(4, 2); // 1M resistor between pins 4 & 2, pin 2 is sensor pin
 const int AUTO_CALIBRATION_OFF = 0xFFFFFFFF;
