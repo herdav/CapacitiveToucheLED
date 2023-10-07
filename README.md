@@ -32,7 +32,6 @@ The sensor consists of a postcard-sized cardboard about 1mm thick. On one side, 
 
 ## Circuit
 
-![capacitiveTouchLED_circuit](https://github.com/herdav/capacitiveToucheLED/assets/19168117/039bb342-3458-42f1-bb78-920229b8aaf8)
 
 ## PCB
 
