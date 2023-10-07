@@ -33,12 +33,12 @@ The sensor consists of a postcard-sized cardboard about 1mm thick. On one side, 
 
 ## Circuit
 
-> [!IMPORTANT]  
-> It is important to connect the circuit board to the ground, otherwise the sensor will not function properly.
-
 ![capacitiveTouchLED_circuit](https://github.com/herdav/capacitiveToucheLED/assets/19168117/039bb342-3458-42f1-bb78-920229b8aaf8)
 
 ## PCB
+
+> [!IMPORTANT]  
+> It is important to connect the PCB to the ground, otherwise the sensor will not function properly.
 
 ![capacitiveTouchLED_pcb](https://github.com/herdav/capacitiveToucheLED/assets/19168117/e1b22fc1-3aec-4b77-82ad-2a3997d2a5f4)
 
