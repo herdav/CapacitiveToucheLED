@@ -1,5 +1,5 @@
 // capacitiveToucheLED
-// Version 231006
+// Version 231007
 // Created 2023 by David Herren
 // https://davidherren.ch
 // https://github.com/herdav/capacitiveTouchLED
@@ -16,8 +16,11 @@ const int AUTO_CALIBRATION_OFF = 0xFFFFFFFF;
 
 bool ledActive = false;
 bool delayActive = false;
+bool buttonState = false;
+long measurement;
 int setSensitivityMax = 100;
-int setLEDtime = 20; // 100
+int sensitivityValue; // 40
+int setLEDtime = 50; // 100
 int countLedOnTime = 0;
 int countLedActiveTime = 0;
 int setDelayTime = 50; // 50
@@ -29,7 +32,6 @@ int countHandTouche = 0; // Counts the time where hand touches.
 int setHandToucheTime = 50; // Set value when trigger when hand touched.
 String ledStatus = "OFF";
 
-
 void setup() {
   Serial.begin(115200);
   pinMode(PIN_LED, OUTPUT);
@@ -40,9 +42,9 @@ void setup() {
 }
 
 void loop() {
-  bool buttonState = digitalRead(PIN_TAS);
-  int sensitivityValue = map(analogRead(PIN_REG), 0, 1023, 0, setSensitivityMax);
-  long measurement = sensor.capacitiveSensor(30);
+  buttonState = digitalRead(PIN_TAS);
+  sensitivityValue = map(analogRead(PIN_REG), 0, 1023, 0, setSensitivityMax);
+  measurement = sensor.capacitiveSensor(30);
 
   Serial.print(ledStatus);
   Serial.print(countWaitingTime);
@@ -78,7 +80,7 @@ void loop() {
       sensor.reset_CS_AutoCal();
       Serial.println(">>> RESETED <<<");
       countWaitingTime = 0;
-      //delay(500);
+      delay(500);
     }
   } else { countWaitingTime = 0; }
 
@@ -93,7 +95,6 @@ void loop() {
       }
     }
   }
-
   delay(10);
 }
 
