@@ -1,5 +1,4 @@
 # capacitiveToucheLED
-
 This setup detects a metal object of about 300g standing on a sensor plate of 100x150mm and turns on a led strip.
 
 ## Code
