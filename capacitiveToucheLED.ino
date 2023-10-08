@@ -1,5 +1,5 @@
 // capacitiveToucheLED
-// Version 231007
+// Version 231008
 // Created 2023 by David Herren
 // https://davidherren.ch
 // https://github.com/herdav/capacitiveTouchLED
@@ -19,11 +19,11 @@ bool delayActive = false;
 bool buttonState = false;
 long measurement;
 int setSensitivityMax = 100;
-int sensitivityValue; // 40
-int setLEDtime = 50; // 100
+int sensitivityValue; // (34, 40)
+int setLEDtime = 5; // Off delay (50)
 int countLedOnTime = 0;
 int countLedActiveTime = 0;
-int setDelayTime = 50; // 50
+int setDelayTime = 50; // (50)
 int countDelayTime = 0;
 int countWaitingTime = 0; // Counts time while sensor is inactive.
 int setResetTime = 100; // Reset sensor after setResetTime.
@@ -78,8 +78,8 @@ void loop() {
     countWaitingTime++;
     if (countWaitingTime >= setResetTime) {
       sensor.reset_CS_AutoCal();
-      Serial.println(">>> RESETED <<<");
       countWaitingTime = 0;
+      Serial.println(">>> RESETED <<<");
       delay(500);
     }
   } else { countWaitingTime = 0; }
@@ -95,7 +95,7 @@ void loop() {
       }
     }
   }
-  delay(10);
+  delay(20); // 10
 }
 
 void resetLED() {
