@@ -24,8 +24,6 @@ ledActive = false;
 > You can force the recalibration by touching the sensor with your hand for a few seconds.
 
 ## Sensor
-
-The sensor consists of a postcard-sized cardboard about 1mm thick. On one side, the cardboard is glued to two equal halves (2 times 100 x 75 mm) with aluminum foil. Between the two halves is a gap of about 2 mm, the resistance is about 15 MΩ. One half is connected to the PCB via a cable. The aluminum foil can be painted or insulated with a material like paper or plasticfoil.
 > [!NOTE]
 > The maximum aluminum area directly connected to the PCB should not be larger than 75x100 mm. The cable (0.14mm²) length should not be longer than 40 cm.
 > Do not cross the sensor cable with power cables.
