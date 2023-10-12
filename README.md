@@ -2,7 +2,7 @@
 This setup detects a metal object of about 300g standing on a sensor plate of 100x150mm and turns on a led strip.
 
 ## Code
-The script capacitiveToucheLED.ino use the [Capacitive Sensor Library](https://playground.arduino.cc/Main/CapacitiveSensor/).
+The script capacitiveToucheLED.ino use the modified [Capacitive Sensor Library](https://playground.arduino.cc/Main/CapacitiveSensor/) – see [Capacitive Touch Sensing with Nano Every](https://forum.arduino.cc/t/capacitive-touch-sensing-with-nano-every/1086407).
 
 ### Recalibration
 
